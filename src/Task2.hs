@@ -10,6 +10,13 @@ instance Foldable Stream where
   foldMap :: Monoid m => (a -> m) -> Stream a -> m
   foldMap f (Stream x s) = f x <> foldMap f s
 
+instance Functor Stream where
+  fmap :: (a -> b) -> Stream a -> Stream b
+  fmap f (Stream x st) = Stream (f x) (fmap f st)
+
+zipWithStream :: (a -> b -> c) -> Stream a -> Stream b -> Stream c
+zipWithStream f (Stream x s1) (Stream y s2) = Stream (f x y) (zipWithStream f s1 s2)
+
 instance Show a => Show (Stream a) where
   show :: Stream a -> String
   show s = "[" ++ doShow 10 s ++ "]"
