@@ -94,10 +94,10 @@ instance Fractional a => Fractional (Series a) where
     where 
       divide (Stream a0 a) b'@(Stream b0 b) = Stream (a0 / b0)
         $ divide
-        (zipWithStream
-        (-) a
-        $ fmap ((a0 / b0) *) b)
-        b'
+          (zipWithStream (-) a
+            (fmap ((a0 / b0) *) b)
+          )
+          b'
 
 -- | Helper function for producing integer
 -- coefficients from generating function
